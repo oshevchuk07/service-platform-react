@@ -1,7 +1,9 @@
-export type UserRole = 'ADMIN' | 'CLIENT';
+export type BackendRole = 'ADMIN' | 'USER';
 
 export interface AuthUser {
   id: number;
   email: string;
-  role: UserRole;
+  firstName: string;
+  lastName: string;
+  role: BackendRole;
 }
