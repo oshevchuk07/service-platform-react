@@ -2,6 +2,9 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, type LoginFormValues } from '../../features/auth/login/loginSchema';
 import { useLogin } from '../../features/auth/login/useLogin';
+import { Label } from '@/shared/ui/label';
+import { Input } from '@/shared/ui/input';
+import { Button } from '@/shared/ui/button';
 
 export function LoginPage() {
   const {
@@ -22,31 +25,23 @@ export function LoginPage() {
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
       <h1 className="text-xl font-semibold">Login</h1>
 
-      <div className="flex flex-col gap-1">
-        <label htmlFor="email" className="text-sm font-medium text-gray-700">
-          Email
-        </label>
-        <input id="email" type="email" {...register('email')} className="rounded-md border border-gray-300 px-3 py-2 text-sm" />
+      <div className="flex flex-col gap-1.5">
+        <Label htmlFor="email">Email</Label>
+        <Input id="email" type="email" {...register('email')} />
         {errors.email && <span className="text-xs text-red-600">{errors.email.message}</span>}
       </div>
 
-      <div className="flex flex-col gap-1">
-        <label htmlFor="password" className="text-sm font-medium text-gray-700">
-          Password
-        </label>
-        <input id="password" type="password" {...register('password')} className="rounded-md border border-gray-300 px-3 py-2 text-sm" />
+      <div className="flex flex-col gap-1.5">
+        <Label htmlFor="password">Password</Label>
+        <Input id="password" type="password" {...register('password')} />
         {errors.password && <span className="text-xs text-red-600">{errors.password.message}</span>}
       </div>
 
-      {login.isError && <span className="text-xs text-red-600">Incorrect login or passwor</span>}
+      {login.isError && <span className="text-xs text-red-600">Wrong password or login</span>}
 
-      <button
-        type="submit"
-        disabled={login.isPending}
-        className="rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white disabled:opacity-50"
-      >
-        {login.isPending ? 'waiting..' : 'Enter'}
-      </button>
+      <Button type="submit" disabled={login.isPending}>
+        {login.isPending ? 'Logining..' : 'Login'}
+      </Button>
     </form>
   );
 }
