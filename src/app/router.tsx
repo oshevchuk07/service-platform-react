@@ -9,6 +9,7 @@ import { loginLoader } from './routing/loginLoader';
 import { authLoader } from './routing/authLoader';
 import { RequireRole } from './routing/RequireRole';
 import { UsersPage } from '../pages/users/UsersPage';
+import { PlansPage } from '@/pages/plans/PlansPage';
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +34,14 @@ export const router = createBrowserRouter([
         element: (
           <RequireRole roles={['ADMIN']}>
             <UsersPage />
+          </RequireRole>
+        ),
+      },
+      {
+        path: 'plans',
+        element: (
+          <RequireRole roles={['ADMIN']}>
+            <PlansPage />
           </RequireRole>
         ),
       },
