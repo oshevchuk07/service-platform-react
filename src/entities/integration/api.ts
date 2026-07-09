@@ -3,7 +3,7 @@ import type { PaginatedResponse, PaginationParams } from '../../shared/types/pag
 import type { Integration, IntegrationGroupWithItems } from './types';
 
 export function fetchIntegrationGroups(params: PaginationParams) {
-  return apiClient.get<PaginatedResponse<IntegrationGroupWithItems>>('/integration-groups', { params }).then((res) => res.data);
+  return apiClient.get<PaginatedResponse<IntegrationGroupWithItems>>('/integrations/groups', { params }).then((res) => res.data);
 }
 
 export function fetchIntegrations(params: PaginationParams) {

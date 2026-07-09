@@ -15,7 +15,7 @@ export function createPlan(payload: CreatePlanPayload) {
 }
 
 export function updatePlan(id: number, payload: UpdatePlanPayload) {
-  return apiClient.patch<Plan>(`/plans/${id}`, payload).then((res) => res.data);
+  return apiClient.put<Plan>(`/plans/${id}`, payload).then((res) => res.data);
 }
 
 export function deletePlan(id: number) {
@@ -23,5 +23,5 @@ export function deletePlan(id: number) {
 }
 
 export function replacePlanIntegrations(planId: number, integrationIds: number[]) {
-  return apiClient.post<void>('/plans/integrations', { planId, integrationIds }).then((res) => res.data);
+  return apiClient.put<void>('/plans/integrations', { planId, integrationIds }).then((res) => res.data);
 }
