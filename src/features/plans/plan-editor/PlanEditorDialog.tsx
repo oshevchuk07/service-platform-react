@@ -7,6 +7,7 @@ import { Button } from '@/shared/ui/button';
 import { useState } from 'react';
 import { useReplacePlanIntegrations } from '@/entities/plan/hooks';
 import { IntegrationsSelectionDialog } from '../integrations-selection/IntegrationsSelectionDialog';
+import { getSelectedIntegrationIds } from '@/entities/plan/utils';
 
 interface PlanEditorDialogProps {
   open: boolean;
@@ -93,7 +94,7 @@ export function PlanEditorDialog({ open, onOpenChange, plan }: PlanEditorDialogP
         <IntegrationsSelectionDialog
           open={integrationsDialogOpen}
           onOpenChange={setIntegrationsDialogOpen}
-          initialSelectedIds={[]}
+          initialSelectedIds={getSelectedIntegrationIds(plan)}
           onConfirm={handleIntegrationsConfirm}
         />
       )}
