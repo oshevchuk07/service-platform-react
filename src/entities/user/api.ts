@@ -27,3 +27,24 @@ export function fetchUsers(params: PaginationParams) {
 export function updateUser(id: number, payload: UpdateUserPayload) {
   return apiClient.put<UserListItem>(`/users/${id}`, payload).then((res) => res.data);
 }
+
+export function fetchUserById(id: number) {
+  return apiClient.get<UserListItem>(`/users/${id}`).then((res) => res.data);
+}
+
+export function removeUser(id: number) {
+  return apiClient.delete<void>(`/users/${id}`).then((res) => res.data);
+}
+
+export interface AssignPlanPayload {
+  planId: number;
+  paymentType?: 'MONTHLY' | 'YEARLY';
+}
+
+export function assignUserPlan(id: number, payload: AssignPlanPayload) {
+  return apiClient.put<UserListItem>(`/users/${id}/plan`, payload).then((res) => res.data);
+}
+
+export function removeUserPlan(id: number) {
+  return apiClient.delete<void>(`/users/${id}/plan`).then((res) => res.data);
+}
