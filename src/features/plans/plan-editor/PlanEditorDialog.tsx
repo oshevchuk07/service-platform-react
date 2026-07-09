@@ -4,6 +4,9 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '
 import { Label } from '@/shared/ui/label';
 import { Input } from '@/shared/ui/input';
 import { Button } from '@/shared/ui/button';
+import { useState } from 'react';
+import { useReplacePlanIntegrations } from '@/entities/plan/hooks';
+import { IntegrationsSelectionDialog } from '../integrations-selection/IntegrationsSelectionDialog';
 
 interface PlanEditorDialogProps {
   open: boolean;
@@ -17,6 +20,14 @@ export function PlanEditorDialog({ open, onOpenChange, plan }: PlanEditorDialogP
     register,
     formState: { errors },
   } = form;
+
+  const [integrationsDialogOpen, setIntegrationsDialogOpen] = useState(false);
+  const replaceIntegrations = useReplacePlanIntegrations();
+
+  const handleIntegrationsConfirm = (integrationIds: number[]) => {
+    if (!plan) return;
+    replaceIntegrations.mutate({ planId: plan.id, integrationIds });
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -61,6 +72,12 @@ export function PlanEditorDialog({ open, onOpenChange, plan }: PlanEditorDialogP
             </label>
           </div>
 
+          {plan && (
+            <Button type="button" variant="outline" onClick={() => setIntegrationsDialogOpen(true)}>
+              Manage Integrations
+            </Button>
+          )}
+
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
               Cancel
@@ -71,6 +88,15 @@ export function PlanEditorDialog({ open, onOpenChange, plan }: PlanEditorDialogP
           </DialogFooter>
         </form>
       </DialogContent>
+
+      {plan && (
+        <IntegrationsSelectionDialog
+          open={integrationsDialogOpen}
+          onOpenChange={setIntegrationsDialogOpen}
+          initialSelectedIds={[]}
+          onConfirm={handleIntegrationsConfirm}
+        />
+      )}
     </Dialog>
   );
 }

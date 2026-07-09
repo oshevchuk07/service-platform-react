@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { fetchPlans, fetchPlanById, createPlan, updatePlan, deletePlan } from './api';
+import { fetchPlans, fetchPlanById, createPlan, updatePlan, deletePlan, replacePlanIntegrations } from './api';
 import type { PaginationParams } from '../../shared/types/pagination';
 import type { CreatePlanPayload, UpdatePlanPayload } from './types';
 import { toast } from 'sonner';
@@ -54,6 +54,18 @@ export function useDeletePlan() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: plansKeys.all });
       toast.success('Plan removed');
+    },
+  });
+}
+
+export function useReplacePlanIntegrations() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ planId, integrationIds }: { planId: number; integrationIds: number[] }) =>
+      replacePlanIntegrations(planId, integrationIds),
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({ queryKey: plansKeys.detail(variables.planId) });
+      toast.success('Integrations updated');
     },
   });
 }

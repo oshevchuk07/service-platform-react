@@ -21,3 +21,7 @@ export function updatePlan(id: number, payload: UpdatePlanPayload) {
 export function deletePlan(id: number) {
   return apiClient.delete<void>(`/plans/${id}`).then((res) => res.data);
 }
+
+export function replacePlanIntegrations(planId: number, integrationIds: number[]) {
+  return apiClient.post<void>('/plans/integrations', { planId, integrationIds }).then((res) => res.data);
+}
