@@ -4,11 +4,13 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Button } from '@/shared/ui/button';
 import type { Plan } from '@/entities/plan/types';
 import { PlanEditorDialog } from '@/features/plans/plan-editor/PlanEditorDialog';
+import { DeletePlanDialog } from '@/features/plans/delete-plan/DeletePlanDialog';
 
 export function PlansPage() {
   const [page, setPage] = useState(1);
   const [editingPlan, setEditingPlan] = useState<Plan | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [deletingPlan, setDeletingPlan] = useState<Plan | null>(null);
 
   const { data, isLoading, isError } = usePlans({ page, limit: 20 });
 
@@ -59,6 +61,9 @@ export function PlansPage() {
                     <Button variant="ghost" size="sm" onClick={() => openEditDialog(plan)}>
                       Edit
                     </Button>
+                    <Button variant="ghost" size="sm" className="text-red-600" onClick={() => setDeletingPlan(plan)}>
+                      Remove
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
@@ -80,6 +85,7 @@ export function PlansPage() {
       )}
 
       <PlanEditorDialog open={dialogOpen} onOpenChange={setDialogOpen} plan={editingPlan} />
+      <DeletePlanDialog open={!!deletingPlan} onOpenChange={(open) => !open && setDeletingPlan(null)} plan={deletingPlan} />
     </div>
   );
 }
