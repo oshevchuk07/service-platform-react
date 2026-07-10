@@ -12,6 +12,11 @@ export interface LoginResponse {
   user: AuthUser;
 }
 
+export interface AssignPlanPayload {
+  planId: number;
+  paymentType?: 'MONTHLY' | 'YEARLY';
+}
+
 export function loginRequest(payload: LoginPayload) {
   return apiClient.post<LoginResponse>('/auth/login', payload).then((res) => res.data);
 }
@@ -34,11 +39,6 @@ export function fetchUserById(id: number) {
 
 export function removeUser(id: number) {
   return apiClient.delete<void>(`/users/${id}`).then((res) => res.data);
-}
-
-export interface AssignPlanPayload {
-  planId: number;
-  paymentType?: 'MONTHLY' | 'YEARLY';
 }
 
 export function assignUserPlan(id: number, payload: AssignPlanPayload) {

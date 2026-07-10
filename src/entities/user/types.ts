@@ -6,6 +6,13 @@ export interface AuthUser {
   firstName: string;
   lastName: string;
   role: BackendRole;
+  planId: number | null;
+  plan?: {
+    id: number;
+    name: string;
+    monthlyPrice: number | null;
+    yearlyPrice: number | null;
+  } | null;
 }
 
 export interface UserListItem {

@@ -10,6 +10,8 @@ import { authLoader } from './routing/authLoader';
 import { RequireRole } from './routing/RequireRole';
 import { UsersPage } from '../pages/users/UsersPage';
 import { PlansPage } from '@/pages/plans/PlansPage';
+import { PricingPage } from '@/pages/subscription/PricingPage';
+import { MySubscriptionPage } from '@/pages/subscription/MySubscriptionPage';
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +44,18 @@ export const router = createBrowserRouter([
         element: (
           <RequireRole roles={['ADMIN']}>
             <PlansPage />
+          </RequireRole>
+        ),
+      },
+      {
+        path: 'pricing',
+        Component: PricingPage,
+      },
+      {
+        path: 'subscription',
+        element: (
+          <RequireRole roles={['USER']}>
+            <MySubscriptionPage></MySubscriptionPage>
           </RequireRole>
         ),
       },
