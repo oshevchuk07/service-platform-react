@@ -1,3 +1,5 @@
+import type { Plan } from '../plan/types';
+
 export type BackendRole = 'ADMIN' | 'USER';
 
 export interface AuthUser {
@@ -6,13 +8,10 @@ export interface AuthUser {
   firstName: string;
   lastName: string;
   role: BackendRole;
+  isActive: boolean;
+  avatar: string | null;
   planId: number | null;
-  plan?: {
-    id: number;
-    name: string;
-    monthlyPrice: number | null;
-    yearlyPrice: number | null;
-  } | null;
+  plan?: Plan | null;
 }
 
 export interface UserListItem {
@@ -22,6 +21,7 @@ export interface UserListItem {
   lastName: string;
   role: BackendRole;
   planId: number | null;
+  paymentType: string;
 }
 
 export interface UpdateUserPayload {
